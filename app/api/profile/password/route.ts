@@ -17,7 +17,7 @@ export async function PUT(req: Request) {
     const { currentPassword, newPassword } = body;
 
     // ✅ get user
-    const [rows]: any = await db.query(
+    const [rows]: any = await db().query(
       "SELECT * FROM users WHERE id=?",
       [decoded.id]
     );
@@ -38,7 +38,7 @@ export async function PUT(req: Request) {
     const hashed = await bcrypt.hash(newPassword, 10);
 
     // ✅ update
-    await db.query(
+    await db().query(
       "UPDATE users SET password=? WHERE id=?",
       [hashed, decoded.id]
     );

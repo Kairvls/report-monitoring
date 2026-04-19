@@ -33,7 +33,7 @@ export async function PUT(
     filePath = "/uploads/" + fileName;
     }
 
-    await db.query(
+    await db().query(
       `UPDATE reports SET 
         report_name = ?,
         agency = ?,
@@ -86,7 +86,7 @@ export async function DELETE(
       );
     }
 
-    const [result]: any = await db.query(
+    const [result]: any = await db().query(
       `DELETE FROM reports WHERE id = ?`,
       [reportId]
     );

@@ -16,7 +16,7 @@ export function startDeadlineChecker() {
       const diff = (deadline.getTime() - now.getTime()) / (1000 * 60 * 60 * 24);
 
       if (diff <= 2 && diff >= 0) {
-        await db.query(
+        await db().query(
           `INSERT INTO notifications (report_id, message)
            VALUES (?, ?)`,
           [r.id, `Report "${r.report_name}" is due soon`]

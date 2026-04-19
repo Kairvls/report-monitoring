@@ -4,19 +4,19 @@ import { db } from "@/lib/db";
 export async function GET() {
   try {
     // 🔹 BASIC COUNTS
-    const [totalRows]: any = await db.query(
+    const [totalRows]: any = await db().query(
       "SELECT COUNT(*) as count FROM reports"
     );
 
-    const [pendingRows]: any = await db.query(
+    const [pendingRows]: any = await db().query(
       "SELECT COUNT(*) as count FROM reports WHERE date_completed IS NULL"
     );
 
-    const [completedRows]: any = await db.query(
+    const [completedRows]: any = await db().query(
       "SELECT COUNT(*) as count FROM reports WHERE date_completed IS NOT NULL"
     );
 
-    const [delayedRows]: any = await db.query(
+    const [delayedRows]: any = await db().query(
       `SELECT COUNT(*) as count FROM reports 
        WHERE deadline < NOW() AND date_completed IS NULL`
     );
@@ -26,8 +26,8 @@ export async function GET() {
     const completed = completedRows?.[0]?.count ?? 0;
     const delayed = delayedRows?.[0]?.count ?? 0;
 
-    // 🔥 TREND (SAFE DATE FIX)
-    const [trendRows]: any = await db.query(`
+    // 🔥 TREND
+    const [trendRows]: any = await db().query(`
       SELECT DATE(date_started) as date, COUNT(*) as count
       FROM reports
       GROUP BY DATE(date_started)
@@ -39,7 +39,7 @@ export async function GET() {
     const trend = trendRows.map((t: any) => t.count);
 
     // 🔥 AGENCY
-    const [agencyRows]: any = await db.query(`
+    const [agencyRows]: any = await db().query(`
       SELECT agency, COUNT(*) as count
       FROM reports
       GROUP BY agency
@@ -49,7 +49,7 @@ export async function GET() {
     const agency = agencyRows.map((a: any) => a.count);
 
     // 🔥 TYPE
-    const [typeRows]: any = await db.query(`
+    const [typeRows]: any = await db().query(`
       SELECT report_type, COUNT(*) as count
       FROM reports
       GROUP BY report_type
@@ -57,14 +57,14 @@ export async function GET() {
 
     const type = typeRows.map((t: any) => t.count);
 
-    // 🔥 FIXED CANDLE (IMPORTANT PART)
+    // 🔥 CANDLE
     const candles = trendRows.map((t: any) => {
       const date = t.date ? new Date(t.date).getTime() : Date.now();
 
       const value = Number(t.count) || 0;
 
       return {
-        x: date, // ✅ must be timestamp
+        x: date,
         y: [
           value - 2,
           value + 5,

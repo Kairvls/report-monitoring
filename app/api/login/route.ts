@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken";
 export async function POST(req: Request) {
   const { username, password } = await req.json();
 
-  const [rows]: any = await db.query(
+  const [rows]: any = await db().query(
     "SELECT * FROM users WHERE username = ?",
     [username]
   );

@@ -67,7 +67,7 @@ export default function Login() {
   };
 
   const isDisabled =
-    !username.trim() || !password || password.length < 6 || loading;
+    !username.trim() || !password || password.length < 3 || loading;
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-black to-slate-900 px-4">

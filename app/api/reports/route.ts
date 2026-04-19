@@ -13,7 +13,7 @@ if (!fs.existsSync(uploadDir)) {
 // ✅ GET ALL REPORTS
 export async function GET() {
   try {
-    const [rows] = await db.query(
+    const [rows] = await db().query(
       "SELECT * FROM reports ORDER BY id DESC"
     );
 
@@ -50,7 +50,7 @@ export async function POST(req: Request) {
     }
 
     // 🔹 INSERT INTO DB
-    await db.query(
+    await db().query(
       `INSERT INTO reports (
         report_name,
         agency,

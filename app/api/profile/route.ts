@@ -11,7 +11,7 @@ export async function GET(req: Request) {
 
     const decoded: any = jwt.verify(token, SECRET);
 
-    const [rows]: any = await db.query(
+    const [rows]: any = await db().query(
       "SELECT id, username, full_name, email, avatar, role FROM users WHERE id=?",
       [decoded.id]
     );
@@ -53,7 +53,7 @@ export async function PUT(req: Request) {
     }
 
     // 🧠 UPDATE QUERY
-    await db.query(
+    await db().query(
       `
       UPDATE users 
       SET full_name = ?, email = ?, 

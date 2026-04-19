@@ -4,7 +4,7 @@ import { db } from "@/lib/db";
 export function startDeadlineChecker() {
   cron.schedule("0 * * * *", async () => {
     // runs every hour
-    const [rows]: any = await db.query(`
+    const [rows]: any = await db().query(`
       SELECT * FROM reports
       WHERE deadline IS NOT NULL
     `);

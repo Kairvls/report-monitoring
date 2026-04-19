@@ -2,7 +2,7 @@ import { db } from "@/lib/db";
 import { NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 
-const SECRET = "secret_key_reports_monitoring";
+const SECRET = process.env.JWT_SECRET!;
 
 export async function GET(req: Request) {
   try {

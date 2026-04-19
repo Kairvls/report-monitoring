@@ -24,7 +24,7 @@ export async function POST(req: Request) {
 
   const token = jwt.sign(
     { id: user.id },
-    "secret_key_reports_monitoring",
+    process.env.JWT_SECRET!,
     { expiresIn: "1d" }
   );
 

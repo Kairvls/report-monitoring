@@ -8,7 +8,7 @@ export async function PUT(
   try {
     const { id } = await context.params; // ✅ FIX HERE
 
-    const [result]: any = await db.query(
+    const [result]: any = await db().query(
       "UPDATE notifications SET is_read = 1 WHERE id = ?",
       [id]
     );

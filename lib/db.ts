@@ -4,10 +4,14 @@ declare global {
   var _dbPool: mysql.Pool | undefined;
 }
 
-export const db =
-  global._dbPool ||
-  mysql.createPool(process.env.MYSQL_URL!);
+export const db = () => {
+  if (!process.env.MYSQL_URL) {
+    throw new Error("MYSQL_URL is not defined");
+  }
 
-if (process.env.NODE_ENV !== "production") {
-  global._dbPool = db;
-}
+  if (!global._dbPool) {
+    global._dbPool = mysql.createPool(process.env.MYSQL_URL);
+  }
+
+  return global._dbPool;
+};

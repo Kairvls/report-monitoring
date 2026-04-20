@@ -25,6 +25,8 @@ export default function DashboardLayout({
 
   const [preview, setPreview] = useState<string | null>(null);
 
+  const [mobileOpen, setMobileOpen] = useState(false);
+
 
 
   const fetchProfile = async () => {
@@ -108,17 +110,29 @@ export default function DashboardLayout({
   }, []);
 
   return (
-    <div className="flex h-screen bg-gray-100">
+    <div className="flex h-screen bg-gray-100 overflow-hidden">
+
+      {/* BACKDROP */}
+        {mobileOpen && (
+          <div
+            onClick={() => setMobileOpen(false)}
+            className="fixed inset-0 bg-black/50 md:hidden z-40"
+          />
+        )}
 
       {/* SIDEBAR */}
       <aside
         className={`
-          ${collapsed ? "w-20" : "w-64"}
+          fixed md:static z-50 h-full
+          ${mobileOpen ? "left-0" : "-left-full md:left-0"}
+          ${collapsed ? "md:w-20" : "md:w-64"}
+          w-64 md:relative
           transition-all duration-300 ease-in-out
-          shrink-0 bg-gradient-to-br from-slate-900 via-black to-slate-900 text-white flex flex-col
-          overflow-hidden rounded-br-4xl
+          bg-gradient-to-br from-slate-900 via-black to-slate-900 text-white flex flex-col
+          overflow-hidden
         `}
       >
+
         {/* TOP */}
         <div className="p-6 flex items-center justify-between border-b border-gray-800">
           {!collapsed && (
@@ -148,9 +162,10 @@ export default function DashboardLayout({
         {/* NAV */}
         <nav className="flex-1 p-4 space-y-4">
           <Link
-              href="/dashboard"
-              className="group flex items-center gap-2 px-3 py-2 w-full rounded-l-md transition-all duration-200 relative"
-            >
+            href="/dashboard"
+            onClick={() => setMobileOpen(false)}
+            className="group flex items-center gap-2 px-3 py-2 w-full rounded-l-md relative"
+          >
               {/* FULL BACKGROUND (ACTIVE + HOVER) */}
               <span
                 className={`
@@ -182,9 +197,10 @@ export default function DashboardLayout({
             </Link>
 
           <Link
-              href="/dashboard/reports"
-              className="group flex items-center gap-2 px-3 py-2 w-full rounded-l-md transition-all duration-200 relative"
-            >
+            href="/dashboard/reports"
+            onClick={() => setMobileOpen(false)}
+            className="group flex items-center gap-2 px-3 py-2 w-full rounded-l-md relative"
+          >
               {/* FULL BACKGROUND */}
               <span
                 className={`
@@ -232,10 +248,18 @@ export default function DashboardLayout({
       </aside>
 
       {/* MAIN */}
-      <div className="flex-1 flex flex-col min-w-0 transition-all duration-300">
+      <div className="flex-1 flex flex-col min-w-0 w-full transition-all duration-300">
 
         {/* HEADER */}
-        <header className="h-20 bg-white border-b flex items-center justify-between px-6 py-11 transition-all duration-300">
+        <header className="h-16 md:h-20 bg-white border-b flex items-center justify-between px-4 md:px-6 transition-all duration-300">
+
+          {/* MOBILE MENU BUTTON */}
+          <button
+            className="md:hidden p-2 rounded-lg hover:bg-gray-100"
+            onClick={() => setMobileOpen(true)}
+          >
+            ☰
+          </button>
 
             {/* 
           <h1 className="text-lg font-semibold text-gray-800">
@@ -475,7 +499,7 @@ export default function DashboardLayout({
         </header>
 
         {/* CONTENT */}
-        <main className="flex-1 overflow-y-auto p-8 transition-all duration-300">
+        <main className="flex-1 overflow-y-auto p-4 md:p-8 transition-all duration-300">
           {children}
         </main>
 

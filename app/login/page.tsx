@@ -140,7 +140,7 @@ export default function Login() {
                   type="button"
                   aria-label={showPassword ? "Hide password" : "Show password"}
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-2 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full text-white/60 transition hover:bg-black/10 hover:text-white active:scale-95"
+                  className="absolute right-2 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full text-white/60 transition hover:bg-white/10 hover:text-white active:scale-95"
                 >
                   {showPassword ? <EyeOff size={19} /> : <Eye size={19} />}
                 </button>
@@ -154,8 +154,8 @@ export default function Login() {
               className={`flex h-12 w-full items-center justify-center gap-2 rounded-2xl px-4 text-sm font-semibold text-white transition active:scale-[0.99] sm:h-13 sm:text-base
                 ${
                   isDisabled
-                    ? "cursor-not-allowed bg-white/10 opacity-50"
-                    : "bg-white text-slate-950 shadow-lg shadow-black/20 hover:bg-slate-100"
+                    ? "cursor-not-allowed bg-black/10 opacity-50"
+                    : "bg-black text-slate-950 shadow-lg shadow-black/20 hover:bg-slate-100"
                 }`}
             >
               {!loading && <ShieldCheck size={18} />}

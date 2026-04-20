@@ -12,6 +12,7 @@
     "apexcharts": "^5.10.6",
     "bcryptjs": "^3.0.3",
     "chart.js": "^4.5.1",
+    "cloudinary": "^2.9.0",
     "formidable": "^3.5.4",
     "framer-motion": "^12.38.0",
     "jsonwebtoken": "^9.0.3",

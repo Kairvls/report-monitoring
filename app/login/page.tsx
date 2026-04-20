@@ -155,7 +155,7 @@ export default function Login() {
                 ${
                   isDisabled
                     ? "cursor-not-allowed bg-black/10 opacity-50"
-                    : "bg-black text-slate-950 shadow-lg shadow-black/20 hover:bg-gray-600"
+                    : "bg-black text-slate-950 shadow-lg shadow-black/20 hover:bg-gray-800 cursor-pointer"
                 }`}
             >
               {!loading && <ShieldCheck size={18} />}

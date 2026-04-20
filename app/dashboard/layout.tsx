@@ -158,7 +158,7 @@ export default function DashboardLayout({
         <div className="p-4 md:p-6 flex items-center justify-between border-b border-gray-800">
           {!collapsed && (
             <div className="group relative">
-              <button type="button" className="flex items-center justify-center cursor-pointer">
+              <button type="button" className="flex items-center justify-center">
                 <svg
                   strokeLinejoin="round"
                   strokeLinecap="round"
@@ -198,7 +198,7 @@ export default function DashboardLayout({
 
             <button
               onClick={() => setMobileOpen(false)}
-              className="md:hidden p-2 rounded-lg hover:bg-white/10 transition"
+              className="md:hidden p-2 rounded-lg hover:bg-white/10 transition cursor-pointer"
               type="button"
             >
               <svg

@@ -1,14 +1,6 @@
 import { db } from "@/lib/db";
 import { NextResponse } from "next/server";
-import path from "path";
-import fs from "fs";
-
-// 📁 ensure upload folder exists
-const uploadDir = path.join(process.cwd(), "public/uploads");
-
-if (!fs.existsSync(uploadDir)) {
-  fs.mkdirSync(uploadDir, { recursive: true });
-}
+import cloudinary from "@/lib/cloudinary";
 
 // ✅ GET ALL REPORTS
 export async function GET() {
@@ -27,12 +19,12 @@ export async function GET() {
   }
 }
 
-// ✅ CREATE REPORT (WITH FILE UPLOAD)
+// ✅ CREATE REPORT (CLOUDINARY UPLOAD)
 export async function POST(req: Request) {
   try {
     const formData = await req.formData();
 
-    // 🔹 FILE HANDLING
+    // 🔹 FILE HANDLING (CLOUDINARY)
     const file = formData.get("proof_document") as File | null;
 
     let filePath: string | null = null;
@@ -41,12 +33,14 @@ export async function POST(req: Request) {
       const bytes = await file.arrayBuffer();
       const buffer = Buffer.from(bytes);
 
-      const fileName = `${Date.now()}-${file.name.replace(/\s+/g, "_")}`;
-      const fullPath = path.join(uploadDir, fileName);
+      const base64 = buffer.toString("base64");
+      const dataURI = `data:${file.type};base64,${base64}`;
 
-      fs.writeFileSync(fullPath, buffer);
+      const uploadRes = await cloudinary.uploader.upload(dataURI, {
+        folder: "reports",
+      });
 
-      filePath = `/uploads/${fileName}`; // ✅ store this in DB
+      filePath = uploadRes.secure_url; // ✅ SAVE URL
     }
 
     // 🔹 INSERT INTO DB

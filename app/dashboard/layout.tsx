@@ -25,6 +25,22 @@ export default function DashboardLayout({
   const profileRef = useRef<HTMLDivElement>(null);
   const infoRef = useRef<HTMLDivElement>(null);
 
+  const totalReports = reports.length;
+
+  const nearestUpcoming = upcoming.length
+    ? [...upcoming].sort(
+        (a, b) =>
+          new Date(a.deadline).getTime() - new Date(b.deadline).getTime()
+      )[0]
+    : null;
+  
+  const pageLabel =
+    pathname === "/dashboard"
+      ? "Dashboard"
+      : pathname.startsWith("/dashboard/reports")
+      ? "Reports"
+      : "System";
+
   const fetchProfile = async () => {
     try {
       const token = localStorage.getItem("token");
@@ -375,17 +391,47 @@ export default function DashboardLayout({
                               />
                             </svg>
                           </div>
-
-                          <div className="min-w-0">
+                      
+                          <div className="min-w-0 w-full">
                             <h3 className="text-sm font-semibold text-white">
-                              Important Information
+                              Hello, {user?.full_name || "User"}
                             </h3>
+                      
                             <p className="mt-1 break-words text-xs leading-relaxed text-gray-300 sm:text-sm">
-                              This is just a reports monitoring system.
+                              You are viewing the{" "}
+                              <span className="font-medium text-white">{pageLabel}</span> page.
                             </p>
+                      
+                            <div className="mt-3 space-y-2 text-[11px] sm:text-xs text-gray-300">
+                              <div className="flex items-center justify-between gap-3">
+                                <span className="text-gray-400">Role</span>
+                                <span className="font-medium text-white">
+                                  {user?.role || "User"}
+                                </span>
+                              </div>
+                      
+                              <div className="flex items-center justify-between gap-3">
+                                <span className="text-gray-400">Total Reports</span>
+                                <span className="font-medium text-white">{totalReports}</span>
+                              </div>
+                      
+                              <div className="flex items-center justify-between gap-3">
+                                <span className="text-gray-400">Upcoming Deadlines</span>
+                                <span className="font-medium text-white">{upcoming.length}</span>
+                              </div>
+                      
+                              <div className="flex items-center justify-between gap-3">
+                                <span className="text-gray-400">Nearest Deadline</span>
+                                <span className="font-medium text-white text-right">
+                                  {nearestUpcoming
+                                    ? new Date(nearestUpcoming.deadline).toLocaleDateString()
+                                    : "No upcoming"}
+                                </span>
+                              </div>
+                            </div>
                           </div>
                         </div>
-
+                      
                         <div className="flex items-center gap-2 text-[11px] text-gray-400 sm:text-xs">
                           <svg
                             viewBox="0 0 20 20"
@@ -398,9 +444,9 @@ export default function DashboardLayout({
                               fillRule="evenodd"
                             />
                           </svg>
-                          <span>Premium Feature</span>
+                          <span>Live dashboard data</span>
                         </div>
-
+                      
                         <div className="pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-r from-indigo-500/10 to-purple-500/10 blur-xl opacity-50"></div>
                       </div>
                     </div>

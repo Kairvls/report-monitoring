@@ -15,6 +15,7 @@ export default function DashboardLayout({
   const [reports, setReports] = useState<any[]>([]);
   const [showNotif, setShowNotif] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
+  const [showInfo, setShowInfo] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
   const [user, setUser] = useState<any>({});
   const [preview, setPreview] = useState<string | null>(null);
@@ -22,6 +23,7 @@ export default function DashboardLayout({
 
   const notifRef = useRef<HTMLDivElement>(null);
   const profileRef = useRef<HTMLDivElement>(null);
+  const infoRef = useRef<HTMLDivElement>(null);
 
   const fetchProfile = async () => {
     try {
@@ -92,8 +94,13 @@ export default function DashboardLayout({
       if (notifRef.current && !notifRef.current.contains(e.target as Node)) {
         setShowNotif(false);
       }
+
       if (profileRef.current && !profileRef.current.contains(e.target as Node)) {
         setShowProfile(false);
+      }
+
+      if (infoRef.current && !infoRef.current.contains(e.target as Node)) {
+        setShowInfo(false);
       }
     };
 
@@ -120,6 +127,7 @@ export default function DashboardLayout({
   const closeAllMenus = () => {
     setShowNotif(false);
     setShowProfile(false);
+    setShowInfo(false);
     setMobileOpen(false);
   };
 
@@ -293,8 +301,8 @@ export default function DashboardLayout({
       {/* MAIN */}
       <div className="flex-1 flex flex-col min-w-0 w-full md:ml-0">
         {/* HEADER */}
-        <header className="bg-white border-b px-3 sm:px-4 md:px-6 py-3 md:py-4">
-          <div className="flex items-center justify-between gap-3">
+        <header className="min-h-[64px] md:h-20 bg-white border-b px-3 sm:px-4 md:px-6 py-3 md:py-4">
+          <div className="flex items-center justify-between gap-2 sm:gap-3">
             {/* LEFT */}
             <div className="flex items-center gap-2 sm:gap-3 min-w-0">
               <button
@@ -323,10 +331,18 @@ export default function DashboardLayout({
               </h1>
             </div>
 
-            {/* CENTER INFO - hidden on small screens */}
-            <div className="hidden lg:block relative inline-block group">
-              <button className="relative px-5 py-2.5 text-sm font-semibold text-white bg-gray-900/90 rounded-xl hover:bg-gray-700/90 focus:outline-none transition-all duration-300 overflow-hidden cursor-pointer">
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 blur-xl group-hover:opacity-75 transition-opacity"></div>
+            {/* CENTER INFO */}
+            <div ref={infoRef} className="relative inline-block shrink-0">
+              <button
+                type="button"
+                onClick={() => {
+                  setShowInfo((prev) => !prev);
+                  setShowNotif(false);
+                  setShowProfile(false);
+                }}
+                className="relative px-3 sm:px-4 md:px-5 py-2.5 text-xs sm:text-sm font-semibold text-white bg-gray-900/90 rounded-xl hover:bg-gray-700/90 focus:outline-none transition-all duration-300 overflow-hidden cursor-pointer"
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 blur-xl opacity-70"></div>
 
                 <span className="relative flex items-center gap-2">
                   <svg
@@ -342,37 +358,45 @@ export default function DashboardLayout({
                       strokeLinecap="round"
                     ></path>
                   </svg>
-                  Hover for Info
+                  <span className="hidden sm:inline">Tap for Info</span>
+                  <span className="sm:hidden">Info</span>
                 </span>
               </button>
 
-              <div className="absolute invisible opacity-0 group-hover:visible group-hover:opacity-100 top-full left-1/2 -translate-x-1/2 mt-3 w-72 transition-all duration-300 ease-out transform group-hover:translate-y-0 translate-y-2 z-40">
-                <div className="relative p-4 bg-gradient-to-br from-gray-900/95 to-gray-800/95 backdrop-blur-md rounded-2xl border border-white/10 shadow-[0_0_30px_rgba(79,70,229,0.15)]">
-                  <div className="flex items-center gap-3 mb-2">
-                    <div className="flex items-center justify-center w-8 h-8 rounded-full bg-indigo-500/20">
+              {showInfo && (
+                <div className="absolute right-0 md:left-1/2 md:-translate-x-1/2 mt-2 w-[calc(100vw-24px)] max-w-[320px] sm:max-w-xs md:max-w-sm z-50">
+                  <div className="relative p-4 bg-gradient-to-br from-gray-900/95 to-gray-800/95 backdrop-blur-md rounded-2xl border border-white/10 shadow-[0_0_30px_rgba(79,70,229,0.15)]">
+                    <div className="flex items-start gap-3 mb-3">
+                      <div className="flex items-center justify-center w-8 h-8 rounded-full bg-indigo-500/20 shrink-0">
+                        <svg
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                          className="w-4 h-4 text-indigo-400"
+                        >
+                          <path
+                            clipRule="evenodd"
+                            d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                            fillRule="evenodd"
+                          ></path>
+                        </svg>
+                      </div>
+
+                      <div className="min-w-0">
+                        <h3 className="text-sm font-semibold text-white">
+                          Important Information
+                        </h3>
+                        <p className="text-xs sm:text-sm text-gray-300 mt-1 leading-relaxed break-words">
+                          This is just a reports monitoring system.
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-2 text-xs text-gray-400">
                       <svg
                         viewBox="0 0 20 20"
                         fill="currentColor"
-                        className="w-4 h-4 text-indigo-400"
+                        className="w-4 h-4 shrink-0"
                       >
-                        <path
-                          clipRule="evenodd"
-                          d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
-                          fillRule="evenodd"
-                        ></path>
-                      </svg>
-                    </div>
-                    <h3 className="text-sm font-semibold text-white">
-                      Important Information
-                    </h3>
-                  </div>
-
-                  <div className="space-y-2">
-                    <p className="text-sm text-gray-300">
-                      This is just a reports monitoring system.
-                    </p>
-                    <div className="flex items-center gap-2 text-xs text-gray-400">
-                      <svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
                         <path
                           clipRule="evenodd"
                           d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
@@ -381,11 +405,11 @@ export default function DashboardLayout({
                       </svg>
                       <span>Premium Feature</span>
                     </div>
-                  </div>
 
-                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-indigo-500/10 to-purple-500/10 blur-xl opacity-50"></div>
+                    <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-indigo-500/10 to-purple-500/10 blur-xl opacity-50 pointer-events-none"></div>
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
 
             {/* RIGHT */}
@@ -396,6 +420,7 @@ export default function DashboardLayout({
                   onClick={() => {
                     setShowNotif((prev) => !prev);
                     setShowProfile(false);
+                    setShowInfo(false);
                   }}
                   className="relative p-2 rounded-full cursor-pointer hover:bg-gray-100"
                   type="button"
@@ -412,14 +437,14 @@ export default function DashboardLayout({
                   </svg>
 
                   {upcoming.length > 0 && (
-                    <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 bg-red-600 text-white text-[10px] flex items-center justify-center rounded-full">
+                    <span className="absolute -top-1 -right-1 bg-red-600 text-white text-[10px] min-w-[18px] h-[18px] px-1 rounded-full flex items-center justify-center">
                       {upcoming.length}
                     </span>
                   )}
                 </button>
 
                 {showNotif && (
-                  <div className="absolute right-0 mt-2 w-[calc(100vw-24px)] max-w-80 sm:w-80 bg-white border rounded-2xl shadow-lg z-50">
+                  <div className="absolute right-0 mt-2 w-[calc(100vw-24px)] max-w-[320px] sm:max-w-[360px] bg-white border rounded-2xl shadow-lg z-50 overflow-hidden">
                     <div className="p-3 border-b text-black font-semibold text-sm sm:text-base">
                       Upcoming Deadlines (2 days)
                     </div>
@@ -435,9 +460,10 @@ export default function DashboardLayout({
                             key={r.id}
                             className="p-3 border-b hover:bg-gray-50"
                           >
-                            <p className="text-sm text-black font-medium break-words">
+                            <p className="text-sm text-black font-medium break-words leading-snug">
                               {r.report_name}
                             </p>
+
                             <p className="text-xs text-red-600 mt-1">
                               Due: {new Date(r.deadline).toLocaleDateString()}
                             </p>
@@ -455,6 +481,7 @@ export default function DashboardLayout({
                   onClick={() => {
                     setShowProfile((prev) => !prev);
                     setShowNotif(false);
+                    setShowInfo(false);
                   }}
                   className="flex items-center gap-2 sm:gap-3 px-2 sm:px-3 py-2 cursor-pointer rounded-full bg-gray-100 hover:bg-gray-200 transition-all duration-200 max-w-[220px] sm:max-w-none"
                   type="button"

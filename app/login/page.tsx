@@ -18,7 +18,7 @@ export default function Login() {
     if (username.trim().length < 2) return "Username must be at least 2 characters";
 
     if (!password) return "Password is required";
-    if (password.length < 6) return "Password must be at least 6 characters";
+    if (password.length < 3) return "Password must be at least 3 characters";
 
     return "";
   };
@@ -64,7 +64,7 @@ export default function Login() {
   };
 
   const isDisabled =
-    !username.trim() || !password || password.length < 6 || loading;
+    !username.trim() || !password || password.length < 3 || loading;
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-[radial-gradient(circle_at_top,_#1e293b_0%,_#0f172a_35%,_#020617_100%)] px-4 py-6 sm:px-6 sm:py-8">

@@ -84,7 +84,7 @@ export default function ProfilePage() {
           {/* Close button */}
           <button
             onClick={() => router.push("/dashboard")}
-            className="absolute right-3 top-3 sm:right-4 sm:top-4 flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-slate-700 shadow-md backdrop-blur hover:bg-white hover:text-black transition"
+            className="absolute right-3 top-3 sm:right-4 sm:top-4 flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-slate-700 shadow-md backdrop-blur hover:bg-white hover:text-black transition cursor-pointer"
             aria-label="Close"
           >
             <X size={20} />
@@ -104,7 +104,7 @@ export default function ProfilePage() {
                         setZoom(1);
                       }
                     }}
-                    className="group relative h-24 w-24 overflow-hidden rounded-full border-4 border-white bg-slate-200 shadow-xl sm:h-28 sm:w-28 md:h-32 md:w-32"
+                    className="group relative h-24 w-24 overflow-hidden rounded-full border-4 border-white bg-slate-200 shadow-xl sm:h-28 sm:w-28 md:h-32 md:w-32 cursor-pointer"
                   >
                     {preview || user.avatar ? (
                       <img
@@ -133,7 +133,7 @@ export default function ProfilePage() {
 
                 {/* Info */}
                 <div className="text-center md:text-left">
-                  <h1 className="max-w-[280px] break-words text-xl font-bold tracking-tight text-slate-900 sm:max-w-none sm:text-2xl md:text-3xl">
+                  <h1 className="max-w-[280px] break-words text-xl font-bold tracking-tight text-amber-800 sm:max-w-none sm:text-2xl md:text-3xl">
                     {user.full_name || "No Name"}
                   </h1>
 
@@ -151,7 +151,7 @@ export default function ProfilePage() {
               <div className="hidden md:block">
                 <button
                   onClick={updateProfile}
-                  className="rounded-2xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-slate-900/15 transition hover:bg-slate-800"
+                  className="rounded-2xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-slate-900/15 transition hover:bg-slate-800 cursor-pointer"
                 >
                   {loading ? "Saving Changes..." : "Save Changes"}
                 </button>
@@ -203,7 +203,7 @@ export default function ProfilePage() {
                   <div className="md:hidden pt-2">
                     <button
                       onClick={updateProfile}
-                      className="w-full rounded-2xl bg-slate-900 px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-slate-900/15 transition hover:bg-slate-800"
+                      className="w-full rounded-2xl bg-slate-900 px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-slate-900/15 transition hover:bg-slate-800 cursor-pointer"
                     >
                       {loading ? "Saving Changes..." : "Save Changes"}
                     </button>
@@ -269,7 +269,7 @@ export default function ProfilePage() {
             >
               <button
                 onClick={() => setShowImage(false)}
-                className="absolute right-0 top-0 z-20 flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur hover:bg-white/20 transition"
+                className="absolute right-0 top-0 z-20 flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur hover:bg-white/20 transition cursor-pointer"
                 aria-label="Close image viewer"
               >
                 <X size={22} />
@@ -301,7 +301,7 @@ export default function ProfilePage() {
               >
                 <button
                   onClick={() => setZoom((z) => Math.max(1, z - 0.2))}
-                  className="flex h-9 w-9 items-center justify-center rounded-full bg-slate-100 text-slate-900 transition hover:bg-slate-200"
+                  className="flex h-9 w-9 items-center justify-center rounded-full bg-slate-100 text-slate-900 transition hover:bg-slate-200 cursor-pointer"
                 >
                   <ZoomOut size={18} />
                 </button>
@@ -312,14 +312,14 @@ export default function ProfilePage() {
 
                 <button
                   onClick={() => setZoom((z) => Math.min(3, z + 0.2))}
-                  className="flex h-9 w-9 items-center justify-center rounded-full bg-slate-100 text-slate-900 transition hover:bg-slate-200"
+                  className="flex h-9 w-9 items-center justify-center rounded-full bg-slate-100 text-slate-900 transition hover:bg-slate-200 cursor-pointer"
                 >
                   <ZoomIn size={18} />
                 </button>
 
                 <button
                   onClick={() => setZoom(1)}
-                  className="rounded-full bg-red-50 px-3 py-2 text-xs font-semibold text-red-600 transition hover:bg-red-100"
+                  className="rounded-full bg-red-50 px-3 py-2 text-xs font-semibold text-red-600 transition hover:bg-red-100 cursor-pointer"
                 >
                   Reset
                 </button>

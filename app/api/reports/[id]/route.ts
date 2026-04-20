@@ -1,9 +1,8 @@
 import { db } from "@/lib/db";
 import { NextRequest, NextResponse } from "next/server";
-import { saveFile } from "@/lib/upload";
-import path from "path";
-import fs from "fs";
+import cloudinary from "@/lib/cloudinary";
 
+// ✅ UPDATE REPORT
 export async function PUT(
   req: NextRequest,
   context: { params: Promise<{ id: string }> }
@@ -14,23 +13,23 @@ export async function PUT(
 
     const formData = await req.formData();
 
+    // 🔹 FILE HANDLING (CLOUDINARY)
     const file = formData.get("proof_document") as File | null;
-
-    const uploadDir = path.join(process.cwd(), "public/uploads");
-
 
     let filePath = null;
 
     if (file && file.size > 0) {
-    const bytes = await file.arrayBuffer();
-    const buffer = Buffer.from(bytes);
+      const bytes = await file.arrayBuffer();
+      const buffer = Buffer.from(bytes);
 
-    const fileName = Date.now() + "-" + file.name;
-    const fullPath = path.join(uploadDir, fileName);
+      const base64 = buffer.toString("base64");
+      const dataURI = `data:${file.type};base64,${base64}`;
 
-    fs.writeFileSync(fullPath, buffer);
+      const uploadRes = await cloudinary.uploader.upload(dataURI, {
+        folder: "reports",
+      });
 
-    filePath = "/uploads/" + fileName;
+      filePath = uploadRes.secure_url;
     }
 
     await db().query(
@@ -56,7 +55,7 @@ export async function PUT(
         formData.get("deadline") || null,
         formData.get("date_submitted") || null,
         formData.get("date_acknowledged") || null,
-        filePath, // ✅ only updates if new file
+        filePath,
         reportId,
       ]
     );
@@ -64,24 +63,26 @@ export async function PUT(
     return NextResponse.json({ success: true });
 
   } catch (err) {
-    console.log(err);
-    return NextResponse.json({ error: "Update failed" }, { status: 500 });
+    console.log("UPDATE ERROR:", err);
+    return NextResponse.json(
+      { error: "Update failed" },
+      { status: 500 }
+    );
   }
 }
 
-// ✅ DELETE (NEW)
+// ✅ DELETE REPORT
 export async function DELETE(
   req: NextRequest,
   context: { params: Promise<{ id: string }> }
 ) {
   try {
     const { id } = await context.params;
-
     const reportId = Number(id);
 
     if (!reportId || isNaN(reportId)) {
       return NextResponse.json(
-        { error: "Invalid Id received" },
+        { error: "Invalid ID" },
         { status: 400 }
       );
     }
@@ -99,6 +100,7 @@ export async function DELETE(
     }
 
     return NextResponse.json({ success: true });
+
   } catch (err: any) {
     console.log("DELETE ERROR:", err);
 

@@ -81,7 +81,7 @@ export default function Login() {
           <div className="mb-6 text-center sm:mb-8">
             <div className="mx-auto mb-3 flex justify-center sm:mb-4">
               <img
-                className="h-24 w-auto object-contain sm:h-28 md:h-32"
+                className="h-50 w-auto object-contain sm:h-28 md:h-32"
                 src="/image/logo.png"
                 alt="logo"
               />

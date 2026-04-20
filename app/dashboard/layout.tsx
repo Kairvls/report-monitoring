@@ -321,8 +321,6 @@ export default function DashboardLayout({
                   <path d="M4 6h16M4 12h16M4 18h16" />
                 </svg>
               </button>
-
-              
             </div>
 
             {/* CENTER INFO */}
@@ -358,20 +356,20 @@ export default function DashboardLayout({
               </button>
 
               {showInfo && (
-                <div className="absolute left-1/2 -translate-x-1/2 md:left-1/2 md:-translate-x-1/2 mt-2 w-[calc(100vw-24px)] max-w-[320px] sm:max-w-xs md:max-w-sm z-50">
-                  <div className="relative p-4 bg-gradient-to-br from-gray-900/95 to-gray-800/95 backdrop-blur-md rounded-2xl border border-white/10 shadow-[0_0_30px_rgba(79,70,229,0.15)]">
-                    <div className="flex items-start gap-3 mb-3">
-                      <div className="flex items-center justify-center w-8 h-8 rounded-full bg-indigo-500/20 shrink-0">
+                <div className="absolute left-1/2 -translate-x-1/2 mt-2 z-50 w-[min(92vw,22rem)] sm:w-[20rem] md:w-[22rem]">
+                  <div className="relative rounded-2xl border border-white/10 bg-gradient-to-br from-gray-900/95 to-gray-800/95 p-3 sm:p-4 backdrop-blur-md shadow-[0_0_30px_rgba(79,70,229,0.15)]">
+                    <div className="mb-3 flex items-start gap-3">
+                      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-indigo-500/20">
                         <svg
                           viewBox="0 0 20 20"
                           fill="currentColor"
-                          className="w-4 h-4 text-indigo-400"
+                          className="h-4 w-4 text-indigo-400"
                         >
                           <path
                             clipRule="evenodd"
                             d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
                             fillRule="evenodd"
-                          ></path>
+                          />
                         </svg>
                       </div>
 
@@ -379,28 +377,28 @@ export default function DashboardLayout({
                         <h3 className="text-sm font-semibold text-white">
                           Important Information
                         </h3>
-                        <p className="text-xs sm:text-sm text-gray-300 mt-1 leading-relaxed break-words">
+                        <p className="mt-1 break-words text-xs leading-relaxed text-gray-300 sm:text-sm">
                           This is just a reports monitoring system.
                         </p>
                       </div>
                     </div>
 
-                    <div className="flex items-center gap-2 text-xs text-gray-400">
+                    <div className="flex items-center gap-2 text-[11px] text-gray-400 sm:text-xs">
                       <svg
                         viewBox="0 0 20 20"
                         fill="currentColor"
-                        className="w-4 h-4 shrink-0"
+                        className="h-4 w-4 shrink-0"
                       >
                         <path
                           clipRule="evenodd"
                           d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
                           fillRule="evenodd"
-                        ></path>
+                        />
                       </svg>
                       <span>Premium Feature</span>
                     </div>
 
-                    <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-indigo-500/10 to-purple-500/10 blur-xl opacity-50 pointer-events-none"></div>
+                    <div className="pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-r from-indigo-500/10 to-purple-500/10 blur-xl opacity-50"></div>
                   </div>
                 </div>
               )}
@@ -438,8 +436,8 @@ export default function DashboardLayout({
                 </button>
 
                 {showNotif && (
-                  <div className="absolute left-1/2 -translate-x-1/2 md:left-auto md:right-0 md:translate-x-0 mt-2 w-[calc(100vw-24px)] max-w-[320px] sm:max-w-[360px] bg-white border rounded-2xl shadow-lg z-50 overflow-hidden">
-                    <div className="p-3 border-b text-black font-semibold text-sm sm:text-base">
+                  <div className="absolute left-1/2 -translate-x-1/2 md:left-auto md:right-0 md:translate-x-0 mt-2 z-50 w-[min(92vw,22rem)] sm:w-[21rem] md:w-[22rem] overflow-hidden rounded-2xl border bg-white shadow-lg">
+                    <div className="border-b p-3 text-sm font-semibold text-black sm:text-base">
                       Upcoming Deadlines (2 days)
                     </div>
 
@@ -452,13 +450,13 @@ export default function DashboardLayout({
                         upcoming.map((r) => (
                           <div
                             key={r.id}
-                            className="p-3 border-b hover:bg-gray-50"
+                            className="border-b p-3 hover:bg-gray-50"
                           >
-                            <p className="text-sm text-black font-medium break-words leading-snug">
+                            <p className="break-words text-sm font-medium leading-snug text-black">
                               {r.report_name}
                             </p>
 
-                            <p className="text-xs text-red-600 mt-1">
+                            <p className="mt-1 text-xs text-red-600">
                               Due: {new Date(r.deadline).toLocaleDateString()}
                             </p>
                           </div>

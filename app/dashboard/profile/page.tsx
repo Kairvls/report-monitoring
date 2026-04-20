@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { Camera, X, ZoomIn, ZoomOut } from "lucide-react";
 
 export default function ProfilePage() {
   const [user, setUser] = useState<any>({});
@@ -14,7 +15,6 @@ export default function ProfilePage() {
   const [showImage, setShowImage] = useState(false);
   const [zoom, setZoom] = useState(1);
 
-  // 📦 FETCH PROFILE
   const fetchProfile = async () => {
     const token = localStorage.getItem("token");
 
@@ -32,7 +32,6 @@ export default function ProfilePage() {
     fetchProfile();
   }, []);
 
-  // 🖼️ AVATAR CHANGE
   const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -41,11 +40,8 @@ export default function ProfilePage() {
 
     const objectUrl = URL.createObjectURL(file);
     setPreview(objectUrl);
-
-    return () => URL.revokeObjectURL(objectUrl);
   };
 
-  // 💾 UPDATE PROFILE
   const updateProfile = async () => {
     setLoading(true);
 
@@ -75,166 +71,263 @@ export default function ProfilePage() {
     }
 
     alert("Profile updated!");
-    fetchProfile(); // refresh updated data
+    fetchProfile();
   };
 
   return (
-    <div className="relative max-w-3xl mx-auto bg-white p-8 rounded-3xl shadow-xl border">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 px-3 py-4 sm:px-5 sm:py-6 lg:px-8">
+      <div className="mx-auto w-full max-w-4xl">
+        <div className="relative overflow-hidden rounded-[28px] border border-slate-200/80 bg-white shadow-[0_10px_40px_rgba(15,23,42,0.08)]">
+          {/* Top accent */}
+          <div className="h-24 sm:h-28 md:h-32 bg-gradient-to-r from-slate-900 via-slate-800 to-black" />
 
-      {/* ❌ CLOSE BUTTON */}
-      <button
-        onClick={() => router.push("/dashboard")}
-        className="absolute top-4 right-4 text-gray-500 hover:text-black transition cursor-pointer"
-      >
-        <svg width="22" height="22" fill="currentColor" viewBox="0 0 16 16">
-          <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
-        </svg>
-      </button>
+          {/* Close button */}
+          <button
+            onClick={() => router.push("/dashboard")}
+            className="absolute right-3 top-3 sm:right-4 sm:top-4 flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-slate-700 shadow-md backdrop-blur hover:bg-white hover:text-black transition"
+            aria-label="Close"
+          >
+            <X size={20} />
+          </button>
 
-      {/* PROFILE HEADER */}
-      <div className="flex items-center gap-6 mb-8">
+          <div className="px-4 pb-5 sm:px-6 md:px-8 lg:px-10">
+            {/* Profile header */}
+            <div className="-mt-12 sm:-mt-14 md:-mt-16 flex flex-col items-center gap-4 sm:gap-5 md:flex-row md:items-end md:justify-between">
+              <div className="flex flex-col items-center gap-4 sm:gap-5 md:flex-row md:items-end">
+                {/* Avatar */}
+                <div className="relative">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (preview || user.avatar) {
+                        setShowImage(true);
+                        setZoom(1);
+                      }
+                    }}
+                    className="group relative h-24 w-24 overflow-hidden rounded-full border-4 border-white bg-slate-200 shadow-xl sm:h-28 sm:w-28 md:h-32 md:w-32"
+                  >
+                    {preview || user.avatar ? (
+                      <img
+                        src={preview || user.avatar}
+                        alt="Profile avatar"
+                        className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
+                      />
+                    ) : (
+                      <div className="flex h-full w-full items-center justify-center bg-black text-3xl font-bold text-white sm:text-4xl">
+                        {user.username?.charAt(0)?.toUpperCase() || "U"}
+                      </div>
+                    )}
+                  </button>
 
-        {/* AVATAR */}
-        <div className="relative w-20 h-20">
-
-          <div
-            onClick={() => {
-                setShowImage(true);
-                setZoom(1); // reset zoom every open
-            }}
-            className="w-20 h-20 rounded-full overflow-hidden bg-gray-200 shadow-lg cursor-pointer hover:scale-105 transition"
-            >
-            {preview || user.avatar ? (
-                <img src={preview || user.avatar} className="w-full h-full object-cover" />
-            ) : (
-                <div className="w-full h-full flex items-center justify-center bg-black text-white text-2xl font-bold">
-                {user.username?.charAt(0)?.toUpperCase()}
+                  {/* Edit */}
+                  <label className="absolute bottom-1 right-1 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-white bg-white text-slate-800 shadow-lg transition hover:bg-slate-100">
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleAvatarChange}
+                      className="hidden"
+                    />
+                    <Camera size={18} />
+                  </label>
                 </div>
-            )}
+
+                {/* Info */}
+                <div className="text-center md:text-left">
+                  <h1 className="max-w-[280px] break-words text-xl font-bold tracking-tight text-slate-900 sm:max-w-none sm:text-2xl md:text-3xl">
+                    {user.full_name || "No Name"}
+                  </h1>
+
+                  <p className="mt-1 break-all text-sm text-slate-500 sm:text-base">
+                    @{user.username || "username"}
+                  </p>
+
+                  <div className="mt-3 inline-flex items-center rounded-full bg-slate-900 px-3 py-1 text-xs font-medium text-white shadow-sm">
+                    {user.role || "Admin"}
+                  </div>
+                </div>
+              </div>
+
+              {/* Save button desktop top alignment */}
+              <div className="hidden md:block">
+                <button
+                  onClick={updateProfile}
+                  className="rounded-2xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-slate-900/15 transition hover:bg-slate-800"
+                >
+                  {loading ? "Saving Changes..." : "Save Changes"}
+                </button>
+              </div>
             </div>
 
-          {/* EDIT BUTTON */}
-          <label className="absolute bottom-0 right-0 bg-gray-200 text-black p-2 rounded-full cursor-pointer hover:bg-gray-300 transition">
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleAvatarChange}
-              className="hidden"
-            />
+            {/* Body */}
+            <div className="mt-6 sm:mt-8 grid grid-cols-1 gap-5 lg:grid-cols-[1.15fr_0.85fr]">
+              {/* Form card */}
+              <div className="rounded-3xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5 md:p-6">
+                <div className="mb-5">
+                  <h2 className="text-lg font-semibold text-slate-900">Profile Information</h2>
+                  <p className="mt-1 text-sm text-slate-500">
+                    Update your personal information and account details.
+                  </p>
+                </div>
 
-            ✎
-          </label>
+                <div className="space-y-4 sm:space-y-5">
+                  <div>
+                    <label className="mb-1.5 block text-sm font-medium text-slate-600">
+                      Full Name
+                    </label>
+                    <input
+                      type="text"
+                      value={user.full_name || ""}
+                      onChange={(e) =>
+                        setUser({ ...user, full_name: e.target.value })
+                      }
+                      className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-slate-900 focus:bg-white focus:ring-2 focus:ring-slate-900/10"
+                      placeholder="Enter your full name"
+                    />
+                  </div>
 
+                  <div>
+                    <label className="mb-1.5 block text-sm font-medium text-slate-600">
+                      Email
+                    </label>
+                    <input
+                      type="email"
+                      value={user.email || ""}
+                      onChange={(e) =>
+                        setUser({ ...user, email: e.target.value })
+                      }
+                      className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-slate-900 focus:bg-white focus:ring-2 focus:ring-slate-900/10"
+                      placeholder="Enter your email"
+                    />
+                  </div>
+
+                  <div className="md:hidden pt-2">
+                    <button
+                      onClick={updateProfile}
+                      className="w-full rounded-2xl bg-slate-900 px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-slate-900/15 transition hover:bg-slate-800"
+                    >
+                      {loading ? "Saving Changes..." : "Save Changes"}
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Side info card */}
+              <div className="rounded-3xl border border-slate-200 bg-gradient-to-br from-slate-50 to-white p-4 shadow-sm sm:p-5 md:p-6">
+                <h3 className="text-lg font-semibold text-slate-900">Account Overview</h3>
+                <p className="mt-1 text-sm text-slate-500">
+                  Quick summary of your profile details.
+                </p>
+
+                <div className="mt-5 space-y-4">
+                  <div className="rounded-2xl border border-slate-200 bg-white px-4 py-3">
+                    <p className="text-xs font-medium uppercase tracking-wide text-slate-400">
+                      Username
+                    </p>
+                    <p className="mt-1 break-all text-sm font-semibold text-slate-900">
+                      @{user.username || "Not available"}
+                    </p>
+                  </div>
+
+                  <div className="rounded-2xl border border-slate-200 bg-white px-4 py-3">
+                    <p className="text-xs font-medium uppercase tracking-wide text-slate-400">
+                      Role
+                    </p>
+                    <p className="mt-1 text-sm font-semibold text-slate-900">
+                      {user.role || "Admin"}
+                    </p>
+                  </div>
+
+                  <div className="rounded-2xl border border-slate-200 bg-white px-4 py-3">
+                    <p className="text-xs font-medium uppercase tracking-wide text-slate-400">
+                      Email
+                    </p>
+                    <p className="mt-1 break-all text-sm font-semibold text-slate-900">
+                      {user.email || "No email set"}
+                    </p>
+                  </div>
+
+                  <div className="rounded-2xl border border-dashed border-slate-300 bg-slate-50 px-4 py-4">
+                    <p className="text-sm text-slate-600">
+                      Tap your profile image to preview it, and use the camera button to upload a new one.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
-        {/* USER INFO */}
-        <div>
-          <h2 className="text-2xl font-bold text-gray-800">
-            {user.full_name || "No Name"}
-          </h2>
-
-          <p className="text-gray-500">@{user.username}</p>
-
-          <span className="inline-block mt-1 text-xs bg-black text-white px-2 py-1 rounded-md">
-            {user.role || "Admin"}
-          </span>
-        </div>
-      </div>
-
-      {/* FORM */}
-      <div className="space-y-5">
-
-        <div>
-          <label className="text-sm text-gray-600">Full Name</label>
-          <input
-            type="text"
-            value={user.full_name || ""}
-            onChange={(e) =>
-              setUser({ ...user, full_name: e.target.value })
-            }
-            className="w-full mt-1 border rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-black text-black"
-          />
-        </div>
-
-        <div>
-          <label className="text-sm text-gray-600">Email</label>
-          <input
-            type="email"
-            value={user.email || ""}
-            onChange={(e) =>
-              setUser({ ...user, email: e.target.value })
-            }
-            className="w-full mt-1 border rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-black text-black"
-          />
-        </div>
-
-        {/* SAVE BUTTON */}
-        <button
-          onClick={updateProfile}
-          className="w-full bg-black text-white py-3 rounded-xl hover:bg-gray-800 transition cursor-pointer"
-        >
-          {loading ? "Saving Changes..." : "Save Changes"}
-        </button>
-
-      </div>
-      
-      {showImage && (
-        <div
-            className="fixed inset-0 bg-black/80 flex items-center justify-center z-50"
+        {/* Image Viewer Modal */}
+        {showImage && (
+          <div
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 px-3 py-4 sm:px-6"
             onClick={() => setShowImage(false)}
-        >
-            
+          >
             <div
-            className="relative flex flex-col items-center"
-            onClick={(e) => e.stopPropagation()}
+              className="relative flex w-full max-w-5xl flex-col items-center"
+              onClick={(e) => e.stopPropagation()}
             >
-            {/* IMAGE */}
-            <img
-                src={preview || user.avatar}
-                style={{
-                transform: `scale(${zoom})`,
-                transition: "transform 0.2s ease",
-                }}
-                className="max-w-[90vw] max-h-[80vh] rounded-lg"
-            />
+              <button
+                onClick={() => setShowImage(false)}
+                className="absolute right-0 top-0 z-20 flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur hover:bg-white/20 transition"
+                aria-label="Close image viewer"
+              >
+                <X size={22} />
+              </button>
 
-            {/* CONTROLS */}
-            <div onWheel={(e) => {
-                e.preventDefault();
+              <div className="mt-12 flex h-[55vh] w-full items-center justify-center overflow-hidden sm:h-[65vh] md:h-[72vh]">
+                <img
+                  src={preview || user.avatar}
+                  alt="Profile preview"
+                  style={{
+                    transform: `scale(${zoom})`,
+                    transition: "transform 0.2s ease",
+                  }}
+                  className="max-h-full max-w-full rounded-2xl object-contain shadow-2xl"
+                />
+              </div>
 
-                if (e.deltaY < 0) {
+              <div
+                onWheel={(e) => {
+                  e.preventDefault();
+
+                  if (e.deltaY < 0) {
                     setZoom((z) => Math.min(3, z + 0.1));
-                } else {
+                  } else {
                     setZoom((z) => Math.max(1, z - 0.1));
-                }
-                }}className="mt-30 flex gap-3 items-center bg-white px-4 py-2 rounded-full shadow">
-
+                  }
+                }}
+                className="mt-4 flex flex-wrap items-center justify-center gap-2 rounded-full bg-white px-3 py-2 shadow-xl sm:px-4"
+              >
                 <button
-                onClick={() => setZoom((z) => Math.max(1, z - 0.2))}
-                className="text-black font-bold cursor-pointer"
+                  onClick={() => setZoom((z) => Math.max(1, z - 0.2))}
+                  className="flex h-9 w-9 items-center justify-center rounded-full bg-slate-100 text-slate-900 transition hover:bg-slate-200"
                 >
-                −
+                  <ZoomOut size={18} />
                 </button>
 
-                <span className="text-sm text-black">{zoom.toFixed(1)}x</span>
+                <span className="min-w-[52px] text-center text-sm font-medium text-black">
+                  {zoom.toFixed(1)}x
+                </span>
 
                 <button
-                onClick={() => setZoom((z) => Math.min(2, z + 0.2))}
-                className="text-black font-bold cursor-pointer"
+                  onClick={() => setZoom((z) => Math.min(3, z + 0.2))}
+                  className="flex h-9 w-9 items-center justify-center rounded-full bg-slate-100 text-slate-900 transition hover:bg-slate-200"
                 >
-                +
+                  <ZoomIn size={18} />
                 </button>
 
                 <button
-                onClick={() => setZoom(1)}
-                className="text-xs text-red-600 ml-2 cursor-pointer"
+                  onClick={() => setZoom(1)}
+                  className="rounded-full bg-red-50 px-3 py-2 text-xs font-semibold text-red-600 transition hover:bg-red-100"
                 >
-                Reset
+                  Reset
                 </button>
+              </div>
             </div>
-            </div>
-        </div>
+          </div>
         )}
+      </div>
     </div>
   );
 }

@@ -298,7 +298,7 @@ export default function Reports() {
     <div className="bg-gray-100 min-h-screen overflow-x-hidden">
       {/* PAGE HEADER */}
       <div className="mb-4 sm:mb-6">
-        <h1 className="text-xl sm:text-2xl font-bold text-gray-900">Reports</h1>
+        <h1 className="text-2xl sm:text-2xl font-bold text-gray-900">Reports</h1>
         <p className="text-sm text-gray-500">
           Manage and track all submitted reports
         </p>
@@ -331,7 +331,7 @@ export default function Reports() {
           <div className="flex flex-col sm:flex-row gap-3 w-full xl:w-auto">
             <button
               onClick={exportPDF}
-              className="w-full sm:w-auto bg-red-800 text-white px-4 py-2.5 rounded-lg hover:bg-red-700 transition"
+              className="w-full sm:w-auto bg-red-800 text-white px-4 py-2.5 rounded-lg hover:bg-red-700 transition cursor-pointer"
             >
               Export PDF
             </button>
@@ -341,7 +341,7 @@ export default function Reports() {
                 resetForm();
                 setIsOpen(true);
               }}
-              className="w-full sm:w-auto bg-black text-white px-4 py-2.5 rounded-lg hover:bg-gray-800 whitespace-nowrap"
+              className="w-full sm:w-auto bg-black text-white px-4 py-2.5 rounded-lg hover:bg-gray-800 whitespace-nowrap cursor-pointer"
             >
               + Make Report
             </button>
@@ -412,21 +412,21 @@ export default function Reports() {
               <div className="mt-4 flex flex-wrap gap-2">
                 <button
                   onClick={() => setViewData(r)}
-                  className="flex-1 min-w-[80px] p-2.5 rounded-lg bg-blue-600 text-white shadow hover:bg-blue-500 transition"
+                  className="flex-1 min-w-[80px] p-2.5 rounded-lg bg-blue-600 text-white shadow hover:bg-blue-500 transition cursor-pointer"
                 >
                   View
                 </button>
 
                 <button
                   onClick={() => handleEdit(r)}
-                  className="flex-1 min-w-[80px] p-2.5 rounded-lg bg-yellow-300 text-black shadow hover:bg-yellow-200 transition"
+                  className="flex-1 min-w-[80px] p-2.5 rounded-lg bg-yellow-300 text-black shadow hover:bg-yellow-200 transition cursor-pointer"
                 >
                   Edit
                 </button>
 
                 <button
                   onClick={() => setDeleteId(r.id)}
-                  className="flex-1 min-w-[80px] p-2.5 rounded-lg bg-red-800 text-white shadow hover:bg-red-700 transition"
+                  className="flex-1 min-w-[80px] p-2.5 rounded-lg bg-red-800 text-white shadow hover:bg-red-700 transition cursor-pointer"
                 >
                   Delete
                 </button>
@@ -500,7 +500,7 @@ export default function Reports() {
                     <div className="flex items-center gap-2">
                       <button
                         onClick={() => setViewData(r)}
-                        className="p-2 rounded-lg bg-blue-600 shadow-gray-300 shadow hover:bg-blue-500 transition"
+                        className="p-2 rounded-lg bg-blue-600 shadow-gray-300 shadow hover:bg-blue-500 transition cursor-pointer"
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -517,7 +517,7 @@ export default function Reports() {
 
                       <button
                         onClick={() => handleEdit(r)}
-                        className="p-2 rounded-lg bg-yellow-300 shadow-gray-300 shadow hover:bg-yellow-200 transition"
+                        className="p-2 rounded-lg bg-yellow-300 shadow-gray-300 shadow hover:bg-yellow-200 transition cursor-pointer"
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -533,7 +533,7 @@ export default function Reports() {
 
                       <button
                         onClick={() => setDeleteId(r.id)}
-                        className="p-2 rounded-lg bg-red-800 shadow-gray-300 shadow hover:bg-red-700 transition"
+                        className="p-2 rounded-lg bg-red-800 shadow-gray-300 shadow hover:bg-red-700 transition cursor-pointer"
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -605,7 +605,7 @@ export default function Reports() {
                     resetForm();
                     setStep(1);
                   }}
-                  className="text-gray-400 hover:text-black text-xl"
+                  className="text-gray-400 hover:text-black text-xl cursor-pointer"
                 >
                   ✕
                 </button>
@@ -758,7 +758,7 @@ export default function Reports() {
                       <button
                         type="button"
                         onClick={() => setRotation((prev) => prev - 90)}
-                        className="px-3 py-2 bg-amber-800 text-white rounded-lg shadow hover:bg-amber-600"
+                        className="px-3 py-2 bg-amber-800 text-white rounded-lg shadow hover:bg-amber-600 cursor-pointer"
                       >
                         ↺
                       </button>
@@ -766,7 +766,7 @@ export default function Reports() {
                       <button
                         type="button"
                         onClick={() => setRotation((prev) => prev + 90)}
-                        className="px-3 py-2 bg-amber-800 text-white rounded-lg shadow hover:bg-amber-600"
+                        className="px-3 py-2 bg-amber-800 text-white rounded-lg shadow hover:bg-amber-600 cursor-pointer"
                       >
                         ↻
                       </button>
@@ -776,7 +776,7 @@ export default function Reports() {
                       <button
                         type="button"
                         onClick={() => setZoom((z) => Math.max(0.5, z - 0.1))}
-                        className="px-3 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700"
+                        className="px-3 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700 cursor-pointer"
                       >
                         -
                       </button>
@@ -784,7 +784,7 @@ export default function Reports() {
                       <button
                         type="button"
                         onClick={() => setZoom((z) => Math.min(3, z + 0.1))}
-                        className="px-3 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700"
+                        className="px-3 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700 cursor-pointer"
                       >
                         +
                       </button>
@@ -792,7 +792,7 @@ export default function Reports() {
                       <button
                         type="button"
                         onClick={() => setZoom(1)}
-                        className="px-3 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-500"
+                        className="px-3 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-500 cursor-pointer"
                       >
                         Reset
                       </button>
@@ -802,7 +802,7 @@ export default function Reports() {
                       <button
                         type="button"
                         onClick={() => setStep(1)}
-                        className="text-gray-600 bg-gray-200 rounded-full hover:bg-gray-300 hover:text-black text-xl px-3 py-1"
+                        className="text-gray-600 bg-gray-200 rounded-full hover:bg-gray-300 hover:text-black text-xl px-3 py-1 cursor-pointer"
                       >
                         ✕
                       </button>
@@ -851,7 +851,7 @@ export default function Reports() {
                     setIsOpen(false);
                     resetForm();
                   }}
-                  className="w-full sm:w-auto px-4 py-2.5 rounded-lg border text-gray-600 hover:bg-gray-100"
+                  className="w-full sm:w-auto px-4 py-2.5 rounded-lg border text-gray-600 hover:bg-gray-100 cursor-pointer"
                 >
                   Cancel
                 </button>
@@ -879,7 +879,7 @@ export default function Reports() {
 
               <button
                 onClick={() => setViewData(null)}
-                className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 text-gray-500 hover:text-black transition"
+                className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 text-gray-500 hover:text-black transition cursor-pointer"
               >
                 ✕
               </button>
@@ -970,7 +970,7 @@ export default function Reports() {
             <div className="px-4 sm:px-6 py-4 border-t flex justify-end">
               <button
                 onClick={() => setViewData(null)}
-                className="w-full sm:w-auto px-4 py-2.5 rounded-lg bg-black text-white hover:bg-gray-800 transition"
+                className="w-full sm:w-auto px-4 py-2.5 rounded-lg bg-black text-white hover:bg-gray-800 transition cursor-pointer"
               >
                 Close
               </button>

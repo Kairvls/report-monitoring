@@ -322,13 +322,7 @@ export default function DashboardLayout({
                 </svg>
               </button>
 
-              <h1 className="text-base sm:text-lg md:text-xl font-semibold text-gray-800 truncate">
-                {pathname === "/dashboard"
-                  ? "Dashboard"
-                  : pathname.includes("reports")
-                  ? "Reports"
-                  : "System"}
-              </h1>
+              
             </div>
 
             {/* CENTER INFO */}

@@ -300,7 +300,7 @@ export default function DashboardLayout({
 
       {/* MAIN */}
       <div className="flex-1 flex flex-col min-w-0 w-full md:ml-0">
-{/* HEADER */}
+        {/* HEADER */}
         <header className="min-h-[64px] md:h-20 bg-white border-b px-3 sm:px-4 md:px-6 py-3 md:py-4 relative z-[60]">
           <div className="flex items-center justify-between w-full">
             {/* LEFT */}

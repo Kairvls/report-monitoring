@@ -301,128 +301,113 @@ export default function DashboardLayout({
       {/* MAIN */}
       <div className="flex-1 flex flex-col min-w-0 w-full md:ml-0">
         {/* HEADER */}
-        {/* HEADER */}
-      <header className="fixed top-0 left-0 right-0 z-[60] bg-white border-b px-4 py-3 flex justify-between items-center">
-
-        {/* INFO BUTTON */}
-        <div ref={infoRef}>
-          <button
-            onClick={() => {
-              setShowInfo(!showInfo);
-              setShowNotif(false);
-              setShowProfile(false);
-            }}
-            className="px-4 py-2 bg-gray-900 text-white rounded-xl"
-          >
-            Info
-          </button>
-        </div>
-
-        {/* RIGHT */}
-        <div className="flex items-center gap-3">
-
-          {/* NOTIFICATIONS */}
-          <div ref={notifRef}>
-            <button
-              onClick={() => {
-                setShowNotif(!showNotif);
-                setShowInfo(false);
-                setShowProfile(false);
-              }}
-              className="relative p-2"
-            >
-              🔔
-              {upcoming.length > 0 && (
-                <span className="absolute -top-1 -right-1 bg-red-600 text-white text-xs px-1 rounded-full">
-                  {upcoming.length}
-                </span>
-              )}
-            </button>
-          </div>
-
-          {/* PROFILE */}
-          <div ref={profileRef}>
-            <button
-              onClick={() => {
-                setShowProfile(!showProfile);
-                setShowNotif(false);
-                setShowInfo(false);
-              }}
-            >
-              👤
-            </button>
-
-            {showProfile && (
-              <div className="absolute right-4 mt-2 w-40 bg-white shadow rounded-xl z-50">
-                <button className="block w-full p-2 text-left hover:bg-gray-100">
-                  Profile
-                </button>
-                <button className="block w-full p-2 text-left hover:bg-gray-100">
-                  Settings
-                </button>
-                <button
-                  onClick={handleLogout}
-                  className="block w-full p-2 text-left text-red-600 hover:bg-gray-100"
+        <header className="min-h-[64px] md:h-20 bg-white border-b px-3 sm:px-4 md:px-6 py-3 md:py-4 relative z-30">
+          <div className="flex items-center justify-between gap-2 sm:gap-3">
+            {/* LEFT */}
+            <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+              <button
+                className="md:hidden p-2 rounded-lg hover:bg-gray-100 shrink-0"
+                onClick={() => setMobileOpen(true)}
+                type="button"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="w-5 h-5"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
                 >
-                  Logout
-                </button>
-              </div>
-            )}
-          </div>
-        </div>
-      </header>
-
-      {/* INFO POPUP */}
-      {showInfo && (
-        <>
-          <div
-            className="fixed inset-0 z-40 md:hidden"
-            onClick={() => setShowInfo(false)}
-          />
-          <div className="fixed top-[80px] left-1/2 -translate-x-1/2 z-50 w-[90vw] max-w-[360px] bg-gray-900 text-white rounded-2xl p-4 shadow-lg">
-            <h3 className="font-semibold">Important Information</h3>
-            <p className="text-sm mt-1">
-              This is just a reports monitoring system.
-            </p>
-          </div>
-        </>
-      )}
-
-      {/* NOTIFICATION POPUP */}
-      {showNotif && (
-        <>
-          <div
-            className="fixed inset-0 z-40 md:hidden"
-            onClick={() => setShowNotif(false)}
-          />
-          <div className="fixed top-[80px] left-1/2 -translate-x-1/2 z-50 w-[90vw] max-w-[360px] bg-white rounded-2xl shadow-lg">
-            <div className="p-3 border-b font-semibold">
-              Upcoming Deadlines
+                  <path d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              </button>
             </div>
 
-            {upcoming.length === 0 ? (
-              <p className="p-3 text-gray-500 text-sm">
-                No upcoming deadlines
-              </p>
-            ) : (
-              upcoming.map((r) => (
-                <div key={r.id} className="p-3 border-b">
-                  <p className="text-sm">{r.report_name}</p>
-                  <p className="text-xs text-red-600">
-                    {new Date(r.deadline).toLocaleDateString()}
-                  </p>
-                </div>
-              ))
-            )}
-          </div>
-        </>
-      )}
+            {/* CENTER INFO */}
+            <div ref={infoRef} className="relative inline-block shrink-0">
+              <button
+                type="button"
+                onClick={() => {
+                  setShowInfo((prev) => !prev);
+                  setShowNotif(false);
+                  setShowProfile(false);
+                }}
+                className="relative px-3 sm:px-4 md:px-5 py-2.5 text-xs sm:text-sm font-semibold text-white bg-gray-900/90 rounded-xl hover:bg-gray-700/90 focus:outline-none transition-all duration-300 overflow-hidden cursor-pointer"
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 blur-xl opacity-70"></div>
 
-      {/* CONTENT */}
-      <main className="pt-[90px] p-4">{children}</main>
-    </div>
-  );
-}
+                <span className="relative flex items-center gap-2">
+                  <svg
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    fill="none"
+                    className="w-4 h-4"
+                  >
+                    <path
+                      d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                      strokeWidth="2"
+                      strokeLinejoin="round"
+                      strokeLinecap="round"
+                    ></path>
+                  </svg>
+                  <span className="hidden sm:inline">Tap for Info</span>
+                  <span className="sm:hidden">Info</span>
+                </span>
+              </button>
+
+              {showInfo && (
+                <>
+                  <div
+                    className="fixed inset-0 z-40 md:hidden"
+                    onClick={() => setShowInfo(false)}
+                  />
+                  <div className="fixed md:absolute top-[92px] md:top-full left-1/2 -translate-x-1/2 md:left-1/2 md:-translate-x-1/2 mt-0 md:mt-2 z-50 w-[calc(100vw-24px)] max-w-[360px] md:w-[22rem]">
+                    <div className="relative rounded-2xl border border-white/10 bg-gradient-to-br from-gray-900/95 to-gray-800/95 p-3 sm:p-4 backdrop-blur-md shadow-[0_0_30px_rgba(79,70,229,0.15)]">
+                      <div className="mb-3 flex items-start gap-3">
+                        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-indigo-500/20">
+                          <svg
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                            className="h-4 w-4 text-indigo-400"
+                          >
+                            <path
+                              clipRule="evenodd"
+                              d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                              fillRule="evenodd"
+                            />
+                          </svg>
+                        </div>
+
+                        <div className="min-w-0">
+                          <h3 className="text-sm font-semibold text-white">
+                            Important Information
+                          </h3>
+                          <p className="mt-1 break-words text-xs leading-relaxed text-gray-300 sm:text-sm">
+                            This is just a reports monitoring system.
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-2 text-[11px] text-gray-400 sm:text-xs">
+                        <svg
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                          className="h-4 w-4 shrink-0"
+                        >
+                          <path
+                            clipRule="evenodd"
+                            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                            fillRule="evenodd"
+                          />
+                        </svg>
+                        <span>Premium Feature</span>
+                      </div>
+
+                      <div className="pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-r from-indigo-500/10 to-purple-500/10 blur-xl opacity-50"></div>
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
 
             {/* RIGHT */}
@@ -458,7 +443,10 @@ export default function DashboardLayout({
 
                 {showNotif && (
                   <>
-                    <div className="fixed inset-0 z-40 md:hidden" />
+                    <div
+                      className="fixed inset-0 z-40 md:hidden"
+                      onClick={() => setShowNotif(false)}
+                    />
                     <div className="fixed md:absolute top-[92px] md:top-full left-1/2 -translate-x-1/2 md:left-auto md:right-0 md:translate-x-0 mt-0 md:mt-2 z-50 w-[calc(100vw-24px)] max-w-[360px] md:w-[22rem] overflow-hidden rounded-2xl border bg-white shadow-lg">
                       <div className="border-b p-3 text-sm font-semibold text-black sm:text-base">
                         Upcoming Deadlines (2 days)

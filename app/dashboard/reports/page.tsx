@@ -298,7 +298,7 @@ export default function Reports() {
     <div className="bg-gray-100 min-h-screen overflow-x-hidden">
       {/* PAGE HEADER */}
       <div className="mb-4 sm:mb-6">
-        <h1 className="text-xl sm:text-2xl font-bold text-gray-900">Reports</h1>
+        <h1 className="text-2xl sm:text-2xl font-bold text-gray-900">Reports</h1>
         <p className="text-sm text-gray-500">
           Manage and track all submitted reports
         </p>

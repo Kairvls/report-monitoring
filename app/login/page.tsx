@@ -78,20 +78,21 @@ export default function Login() {
       <div className="relative mx-auto flex min-h-[calc(100vh-3rem)] w-full max-w-md items-center justify-center sm:min-h-[calc(100vh-4rem)]">
         <div className="w-full rounded-[28px] border border-white/15 bg-white/10 p-5 shadow-2xl backdrop-blur-2xl sm:p-7 md:p-8">
           {/* header */}
-          <div className="mb-6 text-center sm:mb-8">
-            <div className="mx-auto mb-3 flex justify-center sm:mb-4">
-              <img
-                className="h-50 w-auto object-contain sm:h-28 md:h-32"
-                src="/image/logo.png"
-                alt="logo"
-              />
-            </div>
-
-            <h1 className="text-xl font-semibold tracking-tight text-white sm:text-2xl">
+          <div className="mb-8 flex flex-col items-center text-center gap-6">
+            {/* Logo */}
+            <img
+              className="h-36 sm:h-40 md:h-44 w-auto object-contain"
+              src="/image/logo.png"
+              alt="logo"
+            />
+          
+            {/* Title */}
+            <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-white">
               Welcome back
             </h1>
-
-            <p className="mx-auto mt-2 max-w-xs text-sm leading-6 text-white/65">
+          
+            {/* Subtitle */}
+            <p className="max-w-xs text-sm sm:text-base leading-relaxed text-white/65">
               Sign in to access your dashboard
             </p>
           </div>

@@ -25,14 +25,7 @@ export default function DashboardLayout({
   const profileRef = useRef<HTMLDivElement>(null);
   const infoRef = useRef<HTMLDivElement>(null);
 
-  const totalReports = reports.length;
-
-  const nearestUpcoming = upcoming.length
-    ? [...upcoming].sort(
-        (a, b) =>
-          new Date(a.deadline).getTime() - new Date(b.deadline).getTime()
-      )[0]
-    : null;
+  
   
   const pageLabel =
     pathname === "/dashboard"
@@ -104,6 +97,16 @@ export default function DashboardLayout({
       return days >= 0 && days <= 2;
     });
   }, [reports]);
+
+  const totalReports = reports.length;
+
+  const nearestUpcoming = upcoming.length
+    ? [...upcoming].sort(
+        (a, b) =>
+          new Date(a.deadline).getTime() -
+          new Date(b.deadline).getTime()
+      )[0]
+    : null;
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {

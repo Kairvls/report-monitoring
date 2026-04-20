@@ -358,7 +358,7 @@ export default function DashboardLayout({
               </button>
 
               {showInfo && (
-                <div className="absolute right-0 md:left-1/2 md:-translate-x-1/2 mt-2 w-[calc(100vw-24px)] max-w-[320px] sm:max-w-xs md:max-w-sm z-50">
+                <div className="absolute left-1/2 -translate-x-1/2 md:left-1/2 md:-translate-x-1/2 mt-2 w-[calc(100vw-24px)] max-w-[320px] sm:max-w-xs md:max-w-sm z-50">
                   <div className="relative p-4 bg-gradient-to-br from-gray-900/95 to-gray-800/95 backdrop-blur-md rounded-2xl border border-white/10 shadow-[0_0_30px_rgba(79,70,229,0.15)]">
                     <div className="flex items-start gap-3 mb-3">
                       <div className="flex items-center justify-center w-8 h-8 rounded-full bg-indigo-500/20 shrink-0">
@@ -438,7 +438,7 @@ export default function DashboardLayout({
                 </button>
 
                 {showNotif && (
-                  <div className="absolute right-0 mt-2 w-[calc(100vw-24px)] max-w-[320px] sm:max-w-[360px] bg-white border rounded-2xl shadow-lg z-50 overflow-hidden">
+                  className="absolute left-1/2 -translate-x-1/2 md:left-auto md:right-0 md:translate-x-0 mt-2 w-[calc(100vw-24px)] max-w-[320px] sm:max-w-[360px] bg-white border rounded-2xl shadow-lg z-50 overflow-hidden"
                     <div className="p-3 border-b text-black font-semibold text-sm sm:text-base">
                       Upcoming Deadlines (2 days)
                     </div>

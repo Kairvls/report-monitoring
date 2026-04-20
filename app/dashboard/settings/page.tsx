@@ -74,7 +74,7 @@ export default function SettingsPage() {
           {/* close button */}
           <button
             onClick={() => router.push("/dashboard")}
-            className="absolute right-3 top-3 sm:right-4 sm:top-4 flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-slate-700 shadow-md backdrop-blur hover:bg-white hover:text-black transition"
+            className="absolute right-3 top-3 sm:right-4 sm:top-4 flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-slate-700 shadow-md backdrop-blur hover:bg-white hover:text-black transition cursor-pointer"
             aria-label="Close"
           >
             <X size={20} />
@@ -103,7 +103,7 @@ export default function SettingsPage() {
 
                 {/* title */}
                 <div className="text-center md:text-left">
-                  <h1 className="text-xl font-bold tracking-tight text-slate-900 sm:text-2xl md:text-3xl">
+                  <h1 className="text-xl font-bold tracking-tight text-yellow-600 sm:text-2xl md:text-3xl">
                     Security Settings
                   </h1>
 
@@ -155,7 +155,7 @@ export default function SettingsPage() {
                       <button
                         type="button"
                         onClick={() => setShowCurrent(!showCurrent)}
-                        className="absolute right-2 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full text-slate-500 transition hover:bg-slate-100 hover:text-black"
+                        className="absolute right-2 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full text-slate-500 transition hover:bg-slate-100 hover:text-black cursor-pointer"
                         aria-label={showCurrent ? "Hide current password" : "Show current password"}
                       >
                         {showCurrent ? <EyeOff size={18} /> : <Eye size={18} />}
@@ -181,7 +181,7 @@ export default function SettingsPage() {
                       <button
                         type="button"
                         onClick={() => setShowNew(!showNew)}
-                        className="absolute right-2 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full text-slate-500 transition hover:bg-slate-100 hover:text-black"
+                        className="absolute right-2 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full text-slate-500 transition hover:bg-slate-100 hover:text-black cursor-pointer"
                         aria-label={showNew ? "Hide new password" : "Show new password"}
                       >
                         {showNew ? <EyeOff size={18} /> : <Eye size={18} />}
@@ -193,7 +193,7 @@ export default function SettingsPage() {
                   <div className="pt-2">
                     <button
                       onClick={changePassword}
-                      className="w-full rounded-2xl bg-slate-900 px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-slate-900/15 transition hover:bg-slate-800 sm:text-base"
+                      className="w-full rounded-2xl bg-slate-900 px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-slate-900/15 transition hover:bg-slate-800 sm:text-base cursor-pointer"
                     >
                       {loading ? "Updating..." : "Change Password"}
                     </button>

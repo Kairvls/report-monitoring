@@ -306,7 +306,7 @@ export default function DashboardLayout({
             {/* LEFT */}
             <div className="flex items-center gap-3">
               <button
-                className="md:hidden p-2 rounded-lg hover:bg-gray-100 shrink-0"
+                className="md:hidden p-2 rounded-lg bg-gray-200 hover:bg-gray-100 shrink-0"
                 onClick={() => setMobileOpen(true)}
                 type="button"
               >

@@ -133,7 +133,7 @@ export default function ProfilePage() {
 
                 {/* Info */}
                 <div className="text-center md:text-left">
-                  <h1 className="max-w-[280px] break-words text-xl font-bold tracking-tight text-amber-800 sm:max-w-none sm:text-2xl md:text-3xl">
+                  <h1 className="max-w-[280px] break-words text-xl font-bold tracking-tight text-yellow-600 sm:max-w-none sm:text-2xl md:text-3xl">
                     {user.full_name || "No Name"}
                   </h1>
 

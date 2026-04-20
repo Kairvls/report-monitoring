@@ -438,7 +438,7 @@ export default function DashboardLayout({
                 </button>
 
                 {showNotif && (
-                  className="absolute left-1/2 -translate-x-1/2 md:left-auto md:right-0 md:translate-x-0 mt-2 w-[calc(100vw-24px)] max-w-[320px] sm:max-w-[360px] bg-white border rounded-2xl shadow-lg z-50 overflow-hidden"
+                  <div className="absolute left-1/2 -translate-x-1/2 md:left-auto md:right-0 md:translate-x-0 mt-2 w-[calc(100vw-24px)] max-w-[320px] sm:max-w-[360px] bg-white border rounded-2xl shadow-lg z-50 overflow-hidden">
                     <div className="p-3 border-b text-black font-semibold text-sm sm:text-base">
                       Upcoming Deadlines (2 days)
                     </div>

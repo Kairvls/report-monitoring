@@ -297,6 +297,7 @@ export default function Dashboard() {
       type: "heatmap",
       toolbar: { show: false },
     },
+    colors: [brown],
     dataLabels: { enabled: false },
     plotOptions: {
       heatmap: {
@@ -304,16 +305,10 @@ export default function Dashboard() {
         shadeIntensity: 0.6,
         colorScale: {
           ranges: [
-            {
-              from: 0,
-              to: 0,
-              color: "#E5E7EB", // no activity
-            },
-            {
-              from: 1,
-              to: 999,
-              color: "#8B5E3C", // any activity = brown
-            },
+            { from: 0, to: 0, color: "#E5E7EB" },
+            { from: 1, to: 3, color: "#6E5235" },
+            { from: 4, to: 7, color: "#8B5E3C" },
+            { from: 8, to: 999, color: "#5C3B28" },
           ],
         },
       },

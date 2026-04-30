@@ -56,6 +56,17 @@ export default function Reports() {
   const [statusFilter, setStatusFilter] = useState("all");
   const [zoom, setZoom] = useState(1);
 
+  const getReportMonth = (date: string) => {
+    if (!date) return "";
+  
+    const d = new Date(date);
+  
+    return d.toLocaleString("en-US", {
+      month: "long",
+      year: "numeric",
+    });
+  };
+
   const formatDateTime = (value: string) => {
     if (!value) return "";
 
@@ -278,6 +289,7 @@ export default function Reports() {
       r.report_name,
       r.agency,
       r.report_type,
+      getReportMonth(r.date_started), // ✅ ADD THIS
       formatDateTime(r.date_started),
       formatDateTime(r.deadline),
       getStatus(r),
@@ -285,7 +297,7 @@ export default function Reports() {
 
     autoTable(doc, {
       startY: 30,
-      head: [["Report", "Agency", "Type", "Started", "Deadline", "Status"]],
+      head: [["Report", "Agency", "Type", "Month", "Started", "Deadline", "Status"]],
       body: tableData,
       styles: { fontSize: 9 },
       headStyles: { fillColor: [15, 23, 42] },
@@ -382,6 +394,13 @@ export default function Reports() {
                 </div>
               </div>
 
+              <div className="flex justify-between gap-3">
+                <span className="text-gray-500">Report for the Month</span>
+                <span className="text-right text-gray-800">
+                  {getReportMonth(r.date_started)}
+                </span>
+              </div>
+
               <div className="mt-4 space-y-2 text-sm">
                 <div className="flex justify-between gap-3">
                   <span className="text-gray-500">Started</span>
@@ -446,6 +465,7 @@ export default function Reports() {
                 <th className="px-5 py-4 text-left font-medium">Report</th>
                 <th className="px-5 py-4 text-left font-medium">Agency</th>
                 <th className="px-5 py-4 text-left font-medium">Type</th>
+                <th className="px-5 py-4 text-left font-medium">Report for the Month</th>
                 <th className="px-5 py-4 text-left font-medium">Date Started</th>
                 <th className="px-5 py-4 text-left font-medium">Deadline of Submission</th>
                 <th className="px-5 py-4 text-left font-medium">Status</th>
@@ -476,6 +496,10 @@ export default function Reports() {
 
                   <td className="px-5 py-4 text-gray-700 capitalize">
                     {r.report_type}
+                  </td>
+
+                  <td className="px-5 py-4 text-gray-700">
+                    {getReportMonth(r.date_started)}
                   </td>
 
                   <td className="px-5 py-4 text-gray-700">

@@ -305,10 +305,10 @@ export default function Dashboard() {
         shadeIntensity: 0.6,
         colorScale: {
           ranges: [
-            { from: 0, to: 2, color: "#E5E7EB" },
-            { from: 3, to: 5, color: "#C4A484" },
-            { from: 6, to: 10, color: "#8B5E3C" },
-            { from: 11, to: 999, color: "#5C3B28" },
+            { from: 0, to: 0, color: "#E5E7EB" },
+            { from: 1, to: 3, color: "#C4A484" },
+            { from: 4, to: 7, color: "#8B5E3C" },
+            { from: 8, to: 999, color: "#5C3B28" },
           ],
         },
       },

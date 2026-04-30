@@ -6,6 +6,8 @@ import type { ApexOptions } from "apexcharts";
 
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
+type SubmissionMode = "email" | "website" | "lbc";
+
 type DashboardData = {
   summary: {
     total: number;
@@ -91,7 +93,11 @@ export default function Dashboard() {
     const monthlyMap: Record<string, number> = {};
     const weeklyMap = [0, 0, 0, 0, 0, 0, 0];
   
-    const submissionModes = { email: 0, website: 0, lbc: 0 };
+    const submissionModes: Record<SubmissionMode, number> = {
+      email: 0,
+      website: 0,
+      lbc: 0,
+    };
     const reportTypes = {
       annual: 0,
       semiAnnual: 0,
@@ -123,8 +129,10 @@ export default function Dashboard() {
       weeklyMap[index]++;
   
       // SUBMISSION MODE
-      if (submissionModes[r.mode_of_submission] !== undefined) {
-        submissionModes[r.mode_of_submission]++;
+      const mode = r.mode_of_submission as SubmissionMode;
+
+      if (submissionModes[mode] !== undefined) {
+        submissionModes[mode]++;
       }
   
       // REPORT TYPE

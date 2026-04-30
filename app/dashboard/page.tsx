@@ -70,46 +70,101 @@ export default function Dashboard() {
 
   const fetchStats = async () => {
     try {
-      const res = await fetch("/api/dashboard", { cache: "no-store" });
+      const res = await fetch("/api/reports", { cache: "no-store" });
       if (!res.ok) return;
-
-      const payload = await res.json();
-
-      // You can map your API data here.
-      // If your backend still only returns stats, these defaults will still work.
-      setData({
-        summary: {
-          total: Number(payload?.summary?.total ?? payload?.stats?.total ?? 0),
-          pending: Number(payload?.summary?.pending ?? payload?.stats?.pending ?? 0),
-          completed: Number(payload?.summary?.completed ?? payload?.stats?.completed ?? 0),
-          delayed: Number(payload?.summary?.delayed ?? payload?.stats?.delayed ?? 0),
-        },
-        monthlyTrend: payload?.monthlyTrend ?? [12, 18, 10, 22, 16, 28],
-        monthlyLabels: payload?.monthlyLabels ?? ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
-        submissionModes: {
-          email: Number(payload?.submissionModes?.email ?? 12),
-          website: Number(payload?.submissionModes?.website ?? 8),
-          lbc: Number(payload?.submissionModes?.lbc ?? 5),
-        },
-        reportTypes: {
-          annual: Number(payload?.reportTypes?.annual ?? 3),
-          semiAnnual: Number(payload?.reportTypes?.semiAnnual ?? 5),
-          quarterly: Number(payload?.reportTypes?.quarterly ?? 9),
-          monthly: Number(payload?.reportTypes?.monthly ?? 15),
-        },
-        weeklyActivity: payload?.weeklyActivity ?? [3, 5, 2, 7, 4, 6, 1],
-        weeklyLabels: payload?.weeklyLabels ?? ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-        agencyLoads: payload?.agencyLoads ?? [
-          { name: "DepEd", count: 12 },
-          { name: "CHED", count: 8 },
-          { name: "DOLE", count: 6 },
-          { name: "TESDA", count: 10 },
-          { name: "LGU", count: 7 },
-        ],
-      });
+  
+      const reports = await res.json();
+  
+      generateDashboardData(reports);
     } catch (err) {
       console.error(err);
     }
+  };
+
+  const generateDashboardData = (reports: any[]) => {
+    const now = new Date();
+  
+    let pending = 0;
+    let completed = 0;
+    let delayed = 0;
+  
+    const monthlyMap: Record<string, number> = {};
+    const weeklyMap = [0, 0, 0, 0, 0, 0, 0];
+  
+    const submissionModes = { email: 0, website: 0, lbc: 0 };
+    const reportTypes = {
+      annual: 0,
+      semiAnnual: 0,
+      quarterly: 0,
+      monthly: 0,
+    };
+  
+    const agencyMap: Record<string, number> = {};
+  
+    reports.forEach((r) => {
+      const started = new Date(r.date_started);
+      const deadline = new Date(r.deadline);
+  
+      // STATUS
+      if (r.date_completed) completed++;
+      else if (deadline < now) delayed++;
+      else pending++;
+  
+      // MONTHLY TREND
+      const monthKey = started.toLocaleString("en-US", {
+        month: "short",
+      });
+  
+      monthlyMap[monthKey] = (monthlyMap[monthKey] || 0) + 1;
+  
+      // WEEKLY ACTIVITY
+      const day = started.getDay(); // 0 = Sunday
+      const index = day === 0 ? 6 : day - 1; // make Monday first
+      weeklyMap[index]++;
+  
+      // SUBMISSION MODE
+      if (submissionModes[r.mode_of_submission] !== undefined) {
+        submissionModes[r.mode_of_submission]++;
+      }
+  
+      // REPORT TYPE
+      if (r.report_type === "semi-annual") {
+        reportTypes.semiAnnual++;
+      } else if (reportTypes[r.report_type] !== undefined) {
+        reportTypes[r.report_type]++;
+      }
+  
+      // AGENCY LOAD
+      agencyMap[r.agency] = (agencyMap[r.agency] || 0) + 1;
+    });
+  
+    // MONTH LABELS SORTED
+    const monthOrder = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+    const monthlyLabels = monthOrder.filter(m => monthlyMap[m]);
+    const monthlyTrend = monthlyLabels.map(m => monthlyMap[m]);
+  
+    // TOP 5 AGENCIES
+    const agencyLoads = Object.entries(agencyMap)
+      .map(([name, count]) => ({ name, count }))
+      .sort((a, b) => b.count - a.count)
+      .slice(0, 5);
+  
+    setData({
+      summary: {
+        total: reports.length,
+        pending,
+        completed,
+        delayed,
+      },
+      monthlyTrend,
+      monthlyLabels,
+      submissionModes,
+      reportTypes,
+      weeklyActivity: weeklyMap,
+      weeklyLabels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+      agencyLoads,
+    });
   };
 
   useEffect(() => {

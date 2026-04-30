@@ -160,6 +160,7 @@ export default function Reports() {
         r.report_name?.toLowerCase().includes(searchText) ||
         r.agency?.toLowerCase().includes(searchText) ||
         r.report_type?.toLowerCase().includes(searchText) ||
+        getReportMonth(r.date_started)?.toLowerCase().includes(searchText) ||
         formatDateTime(r.date_started)?.toLowerCase().includes(searchText) ||
         formatDateTime(r.deadline)?.toLowerCase().includes(searchText);
 

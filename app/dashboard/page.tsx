@@ -136,10 +136,16 @@ export default function Dashboard() {
       }
   
       // REPORT TYPE
-      if (r.report_type === "semi-annual") {
+      const type = r.report_type;
+
+      if (type === "semi-annual") {
         reportTypes.semiAnnual++;
-      } else if (reportTypes[r.report_type] !== undefined) {
-        reportTypes[r.report_type]++;
+      } else if (type === "annual") {
+        reportTypes.annual++;
+      } else if (type === "quarterly") {
+        reportTypes.quarterly++;
+      } else if (type === "monthly") {
+        reportTypes.monthly++;
       }
   
       // AGENCY LOAD

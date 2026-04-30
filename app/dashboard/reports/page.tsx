@@ -447,7 +447,7 @@ export default function Reports() {
                 <th className="px-5 py-4 text-left font-medium">Agency</th>
                 <th className="px-5 py-4 text-left font-medium">Type</th>
                 <th className="px-5 py-4 text-left font-medium">Date Started</th>
-                <th className="px-5 py-4 text-left font-medium">Deadline</th>
+                <th className="px-5 py-4 text-left font-medium">Deadline of Submission</th>
                 <th className="px-5 py-4 text-left font-medium">Status</th>
                 <th className="px-5 py-4 text-left font-medium">Actions</th>
               </tr>

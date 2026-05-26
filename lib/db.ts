@@ -13,6 +13,8 @@ export const db = () => {
       ssl: {
         rejectUnauthorized: false,
       },
+      connectionLimit: 10,
+      waitForConnections: true,
     });
   }
 

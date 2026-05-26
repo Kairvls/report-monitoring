@@ -10,7 +10,14 @@ export const db = () => {
   }
 
   if (!global._dbPool) {
-    global._dbPool = mysql.createPool(process.env.MYSQL_URL);
+    global._dbPool = mysql.createPool({
+      uri: process.env.MYSQL_URL,
+      waitForConnections: true,
+      connectionLimit: 10,
+      queueLimit: 0,
+      enableKeepAlive: true,
+      keepAliveInitialDelay: 0,
+    });
   }
 
   return global._dbPool;

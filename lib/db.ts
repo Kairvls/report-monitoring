@@ -8,7 +8,12 @@ export const db = () => {
   }
 
   if (!pool) {
-    pool = mysql.createPool(process.env.MYSQL_URL);
+    pool = mysql.createPool({
+      uri: process.env.MYSQL_URL,
+      ssl: {
+        rejectUnauthorized: false,
+      },
+    });
   }
 
   return pool;
